@@ -1,0 +1,30 @@
+Get-AzSubscription
+
+Connect-AzAccount > $null; $?
+
+1.Get-AzResourceGroup
+	Get-AzResourceGroup | ft
+
+2.Get-AzVirtualNetwork
+	$vnet=Get-AzVirtualNetwork
+	$vnet | Out-String | more
+3. Get-AzVM
+	$vms = Get-AzVM
+	$vms | Out-String | more
+
+4.Create Resource Group 
+	New-AzResourceGroup -ResourceGroupName testrg -Location EastUS
+5.Remove ResourceGroup
+	Remove-AzResourceGroup testrg -Force -Verbose
+6.vnet Creation
+	 $MyvNet01 = New-AzVirtualNetwork -ResourceGroupName testrg -Location EastUS -Name myvnet01 -AddressPrefix 172.168.0.0/16
+	To see vnet
+	Get-AzVirtualNetwork -Name myvnet01
+7.To Create Subnet
+	$Mysubnet01 = Add-AzVirtualNetworkSubnetConfig -Name mysubnet01 -AddressPrefix 172.168.0.0/24 -VirtualNetwork $myvnet01
+	 $Mysubnet01 | Set-AzVirtualNetwork    
+	$Mysubnet02 = Add-AzVirtualNetworkSubnetConfig -Name mysubnet02 -AddressPrefix 172.168.1.0/24 -VirtualNetwork $myvnet01
+	$Mysubnet01 | Set-AzVirtualNetwork 
+8. To Delete vnet
+	Remove-AzVirtualNetwork -Name myvnet01
+	Remove-AzVirtualNetwork -Name myvnet01 -Force -Verbose
